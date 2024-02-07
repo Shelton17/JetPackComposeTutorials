@@ -4,12 +4,12 @@ import android.accounts.AuthenticatorDescription
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -24,6 +24,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
@@ -36,6 +38,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.jetpackcomposetutoria1.ui.theme.JetPackComposeTutoria1Theme
+import kotlin.random.Random
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -58,7 +61,7 @@ class MainActivity : ComponentActivity() {
                     }
                 }
                 Row (verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.End){
+                    horizontalArrangement = Arrangement.End, modifier = Modifier.height(200.dp)){
                     Box(modifier = Modifier
                         .fillMaxWidth(0.5f)
                         .padding(16.dp)){
@@ -66,7 +69,9 @@ class MainActivity : ComponentActivity() {
                     }
                     Box(modifier = Modifier
                         .padding(16.dp)){
-                        ImageCard(painter = painter, contentDescription = description, title = title)
+                        ColorBox(
+                            Modifier.fillMaxSize(1f)
+                        )
                     }
                 }
             }
@@ -113,4 +118,21 @@ fun ImageCard(
             }
         }
     }
+}
+@Composable
+fun ColorBox(modifier: Modifier = Modifier){
+    val color = remember{
+        mutableStateOf(Color.Yellow)
+    }
+
+    Box(modifier = modifier
+        .background(color.value)
+        .clickable {
+            color.value = Color(
+                Random.nextFloat(),
+                Random.nextFloat(),
+                Random.nextFloat(),
+                1f
+                )
+        }, )
 }
